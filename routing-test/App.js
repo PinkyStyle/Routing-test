@@ -1,83 +1,18 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, TextInput, View, Image, KeyboardAvoidingView, TouchableOpacity} from 'react-native';
-import { ImageAssets } from './assets/ImageAssets.js';
+import { LoginScreen } from './src/screens/loginScreen.js';
+import { HomeScreen } from './src/screens/homeScreen.js';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
 	return (
-    	<KeyboardAvoidingView
-      		behavior= "padding"
-      		style={{flex:1, backgroundColor:'#f3f6f4'}}
-      		enabled
-    	>
-      		<View style={styles.container}>      
-        		<StatusBar style="auto" />
-        		<Image
-          			style={styles.loginLogo}
-          			source={ImageAssets.loginLogo}
-        		></Image>
-				<Text style={styles.title}>Ingresa a Routing</Text>
-				<TextInput 
-					style={styles.input} 
-					placeholder="Email" 
-				></TextInput>
-				<TextInput 
-					style={styles.input} 
-					placeholder="Password" 
-					secureTextEntry
-				></TextInput>
-				<View
-					style={styles.buttonContainer}
-				>
-					<TouchableOpacity style={styles.button}>
-						<Text style={styles.btnText}>Login</Text>
-					</TouchableOpacity>
-				</View>
-				
-
-      		</View>
-    	</KeyboardAvoidingView>
+		<NavigationContainer>
+			<Stack.Navigator>
+				<Stack.Screen name="Login" component={LoginScreen} options={{headerShown: false}}></Stack.Screen>
+				<Stack.Screen name="Home" component={HomeScreen} options={{headerBackVisible: false, t}}></Stack.Screen>
+			</Stack.Navigator>
+		</NavigationContainer>
  	);
 }
-
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: '#f3f6f4',
-		alignItems: 'center',
-		justifyContent: 'center',
-		padding:24,
-	},
-	title: {
-		fontSize: 30,
-		marginBottom: 15,
-		marginTop: -10,
-		fontWeight: 'bold'
-	},
-	input: {
-		borderColor: '#black',
-		borderWidth: 1,
-		width: '90%',
-		padding: 15,
-		marginBottom: 10,
-		borderRadius: 10,
-	},
-	loginLogo:{
-		width: '100%',
-		height: 400,
-		resizeMode: 'contain'
-	},
-	buttonContainer:{
-		width: '90%',
-		borderRadius: 10,
-		overflow: 'hidden',
-	},
-	button:{
-		width: '100%',
-		padding: 15,
-		backgroundColor: '#2196f3',
-	},
-	btnText: {
-		textAlign: 'center',
-		color: '#FFFFFF'
-	},
-});
