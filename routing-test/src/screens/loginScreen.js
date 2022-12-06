@@ -1,11 +1,55 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, TextInput, View, Image, KeyboardAvoidingView, TouchableOpacity} from 'react-native';
+import { StyleSheet, Text, TextInput, View, Image, KeyboardAvoidingView, TouchableOpacity, Alert} from 'react-native';
 import { ImageAssets } from '../assets/ImageAssets.js';
-import { app } from '../../firebaseConfig.js';
+import { useState } from 'react';
 
-const auth = getAuth(app);
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { initializeApp } from '@firebase/app';
+import { firebaseConfig } from '../../firebaseConfig.js';
 
-export function LoginScreen({navigation}) {	
+
+
+export function LoginScreen({}) {	
+	
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
+
+	const app = initializeApp(firebaseConfig);
+	const auth = getAuth(app);
+
+	const handleSignIn = () => {
+		signInWithEmailAndPassword(auth,email,password)
+		.then((userCredential) => {
+			const user = userCredential.user;
+			
+			// const uid = user.uid;
+			// const email = user.email;
+			// const displayName = user.displayName;
+			// const phoneNumebr = user.phoneNumber;
+		})
+		.catch(error => {
+			const message = error.code;
+			var alertText = '';
+			switch(message){
+				case 'auth/invalid-email':
+					alertText = "Email no válido."
+					break;
+				case 'auth/wrong-password':
+					alertText = "Contraseña incorrecta."
+					break;
+				case 'auth/user-disabled':
+					alertText = "Usuario bloqueado. Hablar con Administración."
+					break;
+				case 'auth/user-not-found':
+					alertText = "Usuario no encontrado, compruebe sus datos."
+					break;
+				default:
+					alertText = "Error al iniciar sesion, compruebe sus datos."
+			}
+			Alert.alert(alertText)
+		})
+	}
+
 	return (
     	<KeyboardAvoidingView
       		behavior= "padding"
@@ -22,16 +66,20 @@ export function LoginScreen({navigation}) {
 				<TextInput 
 					style={styles.input} 
 					placeholder="Email" 
+					defaultValue= {email}
+					onChangeText = {newText => setEmail(newText)}
 				></TextInput>
 				<TextInput 
 					style={styles.input} 
 					placeholder="Password" 
+					defaultValue={password}
+					onChangeText = {newText => setPassword(newText)}
 					secureTextEntry
 				></TextInput>
 				<View
 					style={styles.buttonContainer}
 				>
-					<TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Home')}>
+					<TouchableOpacity style={styles.button} onPress={handleSignIn}>
 						<Text style={styles.btnText}>Login</Text>
 					</TouchableOpacity>
 				</View>
