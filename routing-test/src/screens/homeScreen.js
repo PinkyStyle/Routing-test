@@ -16,15 +16,12 @@ const auth = getAuth(app);
 export function HomeScreen(){
 
     const handleLogout = () => {
-        
-        
-
-        // signOut(auth).then(() => {
+        signOut(auth).then(() => {
             
-        // }).catch((error) => {
-        //     // An error happened.
-        //     Alert.alert(error)
-        // });
+        }).catch((error) => {
+            // An error happened.
+            Alert.alert(error)
+        });
     }
     
     return(
@@ -51,6 +48,7 @@ export function HomeScreen(){
             <Tab.Screen name="Usuarios" component={UsersList} 
             options={{headerRight: () => (
                 <Pressable style={styles.button} onPress={handleLogout}>
+                    <Text style={{fontSize:10}}>Logout</Text>
                     <AntDesign name="logout" size={24} color="black" />
                 </Pressable>
               ),
