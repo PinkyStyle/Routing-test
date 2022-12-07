@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { View, Text, Button, StyleSheet, KeyboardAvoidingView, Pressable, Alert} from "react-native";
+import { View, Text, StyleSheet, KeyboardAvoidingView, Pressable, Alert} from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 
 import { firebaseConfig } from "../../firebaseConfig";
@@ -35,13 +35,11 @@ export function CreateUser({navigation}){
                     if(response.ok){
                         Alert.alert("Usuario creado con exito");
                         navigation.goBack();
-                    }              
+                    }            
                 });
             } );
         })        
     }
-
-    
 
     const handleSignUp = () => {
         createUserWithEmailAndPassword(auth, email, password)
@@ -49,7 +47,23 @@ export function CreateUser({navigation}){
             sendPostRequest();                      
         })
         .catch((error) => {
-
+            console.log(error);
+            const message = error.code;
+            var alertText = '';
+            switch(message){
+                case 'auth/email-already-exists':
+					alertText = "Email ya registrado. Intente con otro.";
+					break;
+                case 'auth/invalid-email':
+                    alertText = "Email no válido. Compruebe sus datos.";
+                    break;
+                case 'auth/invalid-password':
+                    alertText ="Contraseña no válida. Debe tener minimo 6 caracteres.";
+                    break;
+                default:
+                    alertText= "Error al ingresar los datos. Intente nuevamente";
+            }
+            Alert.alert(alertText);
         });
     }
 

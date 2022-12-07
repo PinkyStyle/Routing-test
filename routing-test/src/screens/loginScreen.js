@@ -19,13 +19,7 @@ export function LoginScreen({}) {
 
 	const handleSignIn = () => {
 		signInWithEmailAndPassword(auth,email,password)
-		.then((userCredential) => {
-			const user = userCredential.user;
-			
-			// const uid = user.uid;
-			// const email = user.email;
-			// const displayName = user.displayName;
-			// const phoneNumebr = user.phoneNumber;
+		.then((userCredential) => {	
 		})
 		.catch(error => {
 			const message = error.code;

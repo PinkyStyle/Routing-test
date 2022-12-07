@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Button, Pressable, Alert } from "react-native";
+import { Text, StyleSheet, Pressable, Alert } from "react-native";
 import { MapsScreen } from "./mapsScreen";
 import { UsersList } from "./usersList";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -29,7 +29,6 @@ export function HomeScreen(){
         screenOptions={({ route }) => ({
             tabBarIcon: ({ focused, color, size }) => {
                 let iconName;
-    
                 if (route.name === 'Usuarios') {
                     iconName = focused
                     ? 'people'
@@ -37,8 +36,6 @@ export function HomeScreen(){
                 } else if (route.name === 'Mapa') {
                     iconName = focused ? 'navigate-circle' : 'navigate-circle-outline';
                 }
-    
-                // You can return any component that you like here!
                 return <Ionicons name={iconName} size={size} color={color} />;
                 },
                 tabBarActiveTintColor: '#2196f3',
@@ -55,7 +52,8 @@ export function HomeScreen(){
             }} />
             <Tab.Screen name="Mapa" component={MapsScreen}
             options={{headerRight: () => (
-                <Pressable style={styles.button} onPress={handleLogout}>    
+                <Pressable style={styles.button} onPress={handleLogout}>   
+                    <Text style={{fontSize:10}}>Logout</Text> 
                     <AntDesign name="logout" size={24} color="black" />
                 </Pressable>
               ),

@@ -142,14 +142,14 @@ export function MapsScreen(){
         longitudeDelta: 0.0421,
     });
     const [marker2, setMarker2] = useState({
-        latitude: -33.42732964185012,
-        longitude: -70.6178228910388,
+        latitude: -33.435065663438586,
+        longitude: -70.62283325747325,
         latitudeDelta: 0.0922,
         longitudeDelta: 0.0421,
     });  
     const [marker3, setMarker3] = useState({
-        latitude: -33.42732964185012,
-        longitude: -70.6178228910388,
+        latitude: -33.43973022280469,
+        longitude: -70.62944222041715,
         latitudeDelta: 0.0922,
         longitudeDelta: 0.0421,
     });
