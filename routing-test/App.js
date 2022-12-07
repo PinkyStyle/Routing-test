@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { LoginScreen } from './src/screens/loginScreen.js';
 import { HomeScreen } from './src/screens/homeScreen.js';
+import { CreateUser } from './src/screens/createUser.js';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -31,6 +32,7 @@ export default function App() {
 				{logged_in ? (
 				<>
 					<Stack.Screen name="Home" component={HomeScreen} options={{headerShown: false}}></Stack.Screen>
+					<Stack.Screen name="Crear Usuario" component={CreateUser} options={{presentation: 'modal'}}></Stack.Screen>
 				</>
 				) : (
 				<>

@@ -1,12 +1,12 @@
 import React from 'react';
-import { View, Text, StyleSheet, FlatList, Pressable, Alert, Divider } from "react-native";
+import { View, Text, StyleSheet, FlatList, Pressable, ActivityIndicator } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";  
+import { useEffect, useState } from "react";
 
 import { firebaseConfig } from "../../firebaseConfig";
 import { getAuth, signOut } from "firebase/auth";
 import { initializeApp } from '@firebase/app';
-import { useEffect, useState } from "react";
-import { AntDesign } from '@expo/vector-icons'; 
+
 import Ionicons from 'react-native-vector-icons/Ionicons';
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
@@ -17,14 +17,22 @@ const Item = ({ name, phoneNumber, email }) => (
         <Ionicons name="person-circle-outline" size={30} color="#2196f3"/>
         <View style={styles.userInfo}>
             <Text style={styles.userInfoText}>{name}</Text>
+            <Text style={styles.userInfoText}>{email}</Text>
             <Text style={styles.userInfoText}>{phoneNumber}</Text>
-            <Text style={styles.userInfoText}>{name}</Text>
         </View>
     </View>
 );
 
 export function UsersList({navigation}){
     const [data, setData] = useState('');
+    const [refreshing, setRefreshing] = useState(false)
+
+    useEffect(() => {
+        const focusHandler = navigation.addListener('focus', () => {
+            setRefreshing(true);
+        });
+        return focusHandler;
+    }, [navigation]);
 
     useEffect(()=>{
         async function fetchData(){
@@ -48,9 +56,40 @@ export function UsersList({navigation}){
         }
         fetchData();
     }, []);
+
+    useEffect(()=>{
+        if(refreshing){
+            async function fetchData(){
+                var url = "https://routingtest-648b4-default-rtdb.firebaseio.com/users.json?auth=";
+                auth.currentUser.getIdToken().then(function (token){
+                    fetch(url+token)
+                    .then(response =>{
+                        if(response.ok){
+                            setRefreshing(false);
+                            return response.json();
+                        }                    
+                    }).then(response => {
+                        var aux = [];
+                        for(const x in response){
+                            aux.push(response[x]);
+                            setData(aux);                        
+                        }
+                    }
+                    );
+                } );
+                
+            }
+            fetchData();
+            setRefreshing(false);
+        };
+    }, [refreshing])
     
+    const onRefresh = React.useCallback(() => {
+        setRefreshing(true);
+    }, []);
+
     const renderItem = ({ item }) => (        
-        <Item name={item.nombre} phoneNumber={item.phoneNumber} email={item.id} />
+        <Item name={item.name} phoneNumber={item.phoneNumber} email={item.email} />
     );
 
     const Header = () => {
@@ -66,13 +105,15 @@ export function UsersList({navigation}){
     
     return (
         <SafeAreaView style = {styles.container}>
-            <Header/>                           
+            <Header/>             
             <FlatList
                 data={data}
                 renderItem={renderItem}
-                keyExtractor={item => item.id}                
+                keyExtractor={item => item.email}     
+                refreshing = {refreshing}           
+                onRefresh = {onRefresh}
             >
-            </FlatList>
+            </FlatList>                       
         </SafeAreaView>
     );
 }
