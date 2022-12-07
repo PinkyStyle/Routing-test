@@ -55,7 +55,7 @@ export function HomeScreen(){
             }} />
             <Tab.Screen name="Mapa" component={MapsScreen}
             options={{headerRight: () => (
-                <Pressable style={styles.button} onPress={handleLogout}>
+                <Pressable style={styles.button} onPress={handleLogout}>    
                     <AntDesign name="logout" size={24} color="black" />
                 </Pressable>
               ),
