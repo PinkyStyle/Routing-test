@@ -18,12 +18,19 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.example.RoutingTest",
+      "config": {
+        "googleMapsApiKey": "AIzaSyA85D4Bw3yEIRGGLUvpZvgTUwqYZOwSz9Q"
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
+      },
+      "config": {
+        "googleMapsApiKey": "AIzaSyA85D4Bw3yEIRGGLUvpZvgTUwqYZOwSz9Q"
       }
     },
     "web": {

@@ -21,5 +21,6 @@ npx expo install firebase
 Otros
 ```
 npm install @react-navigation/bottom-tabs
+npx expo install react-native-maps
 
 ```

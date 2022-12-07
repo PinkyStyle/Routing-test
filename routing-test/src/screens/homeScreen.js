@@ -34,7 +34,7 @@ export function HomeScreen(){
                     iconName = focused
                     ? 'people'
                     : 'people-outline';
-                } else if (route.name === 'Maps') {
+                } else if (route.name === 'Mapa') {
                     iconName = focused ? 'navigate-circle' : 'navigate-circle-outline';
                 }
     
@@ -53,7 +53,7 @@ export function HomeScreen(){
                 </Pressable>
               ),
             }} />
-            <Tab.Screen name="Maps" component={MapsScreen}
+            <Tab.Screen name="Mapa" component={MapsScreen}
             options={{headerRight: () => (
                 <Pressable style={styles.button} onPress={handleLogout}>
                     <AntDesign name="logout" size={24} color="black" />
