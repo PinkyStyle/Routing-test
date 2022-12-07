@@ -16,9 +16,9 @@ const Item = ({ name, phoneNumber, email }) => (
     <View style={styles.itemContainer}>
         <Ionicons name="person-circle-outline" size={30} color="#2196f3"/>
         <View style={styles.userInfo}>
-            <Text style={styles.userInfoText}>{name}</Text>
-            <Text style={styles.userInfoText}>{email}</Text>
-            <Text style={styles.userInfoText}>{phoneNumber}</Text>
+            <Text style={styles.userInfoText}>Nombre: {name}</Text>
+            <Text style={styles.userInfoText}>Correo: {email}</Text>
+            <Text style={styles.userInfoText}>N°Telefono: {phoneNumber}</Text>
         </View>
     </View>
 );

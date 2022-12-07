@@ -25,7 +25,6 @@ export function MapsScreen(){
                         console.log('error?')
                     }    
                 }).then(response => {
-                    console.log(response["point1"]["lat"]);
                     setMarker1({
                         latitude: response["point1"]["lat"],
                         longitude: response["point1"]["long"],
